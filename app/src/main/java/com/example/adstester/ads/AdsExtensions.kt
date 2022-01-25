@@ -61,9 +61,6 @@ fun AppCompatActivity.doAfterAd() {
             super.onAdFailedToShowFullScreenContent(p0)
         }
 
-        override fun onAdShowedFullScreenContent() {
-            super.onAdShowedFullScreenContent()
-        }
     }
 }
 
@@ -134,7 +131,7 @@ fun populateUnifiedNativeAdView(nativeAd: NativeAd, adView: NativeAdView) {
         adView.callToActionView.visibility = View.INVISIBLE
     } else {
         adView.callToActionView.visibility = View.VISIBLE
-        (adView.callToActionView as Button).setText(nativeAd.callToAction)
+        (adView.callToActionView as Button).text = nativeAd.callToAction
     }
     if (nativeAd.icon == null) {
         adView.iconView.visibility = View.GONE
@@ -168,5 +165,6 @@ fun populateUnifiedNativeAdView(nativeAd: NativeAd, adView: NativeAdView) {
     }
     adView.setNativeAd(nativeAd)
 }
+
 
 
