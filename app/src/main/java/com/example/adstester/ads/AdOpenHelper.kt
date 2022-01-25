@@ -119,6 +119,8 @@ class AdOpenHelper(private var myApplication: AppClass) : Application.ActivityLi
 
     override fun onActivityDestroyed(p0: Activity) {
         currentActivity = p0
+        isShowingAd = false
+        appOpenAd = null
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

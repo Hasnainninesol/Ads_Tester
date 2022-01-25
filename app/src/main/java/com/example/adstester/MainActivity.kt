@@ -46,4 +46,8 @@ class MainActivity : AppCompatActivity() {
 
             return (adWidthPixels / density).toInt()
         }
+
+    override fun onStop() {
+        super.onStop()
+    }
 }

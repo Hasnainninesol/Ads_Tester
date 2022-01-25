@@ -9,6 +9,9 @@ import com.example.adstester.databinding.ActivityBBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class ActivityB : AppCompatActivity() {
     private lateinit var parentBinding: ActivityBBinding
@@ -20,12 +23,9 @@ class ActivityB : AppCompatActivity() {
         parentBinding = ActivityBBinding.inflate(layoutInflater)
         setContentView(binding.root)
         showInterstitial()
+
         CoroutineScope(Dispatchers.IO).launch {
-            var count = 0
-            while (count <= 20) {
-                itemList.add("Title $count")
-                count++
-            }
+            loadTitles()
         }.invokeOnCompletion {
             with(binding)
             {
@@ -36,5 +36,29 @@ class ActivityB : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun loadTitles() {
+
+        var count = 0
+        while (count <= 20) {
+            when (count) {
+                5 -> {
+                    itemList.add(count, "Native")
+                }
+                10 -> {
+                    itemList.add(count, "Native")
+                }
+                15 -> {
+                    itemList.add(count, "Native")
+                }
+                else -> {
+                    itemList.add(count, "Title $count")
+                }
+            }
+
+            count++
+        }
+
     }
 }

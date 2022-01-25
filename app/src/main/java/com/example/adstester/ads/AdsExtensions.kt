@@ -103,10 +103,11 @@ fun Activity.loadNativeAd(newframeLayout: FrameLayout, LayoutId: Int, shimmer: S
             shimmer.stopShimmer()
             shimmer.visibility = View.GONE
         }
+
     })
         .withNativeAdOptions(NativeAdOptions.Builder().build())
         .build()
-    adloader.loadAd(AdRequest.Builder().build())
+    adloader.loadAds(AdRequest.Builder().build(), 3)
 }
 
 fun populateUnifiedNativeAdView(nativeAd: NativeAd, adView: NativeAdView) {
