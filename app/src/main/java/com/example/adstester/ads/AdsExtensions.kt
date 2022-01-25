@@ -110,6 +110,26 @@ fun Activity.loadNativeAd(newframeLayout: FrameLayout, LayoutId: Int, shimmer: S
     adloader.loadAds(AdRequest.Builder().build(), 3)
 }
 
+fun Activity.loadNativeAd(
+    newframeLayout: FrameLayout,
+    LayoutId: Int,
+    shimmer: ShimmerFrameLayout,
+    nativeAd: NativeAd
+) {
+    shimmer.startShimmer()
+    val frameLayout = newframeLayout
+    val adView = (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+        LayoutId,
+        null
+    ) as NativeAdView
+    populateUnifiedNativeAdView(nativeAd, adView)
+    frameLayout.removeAllViews()
+    frameLayout.addView(adView)
+    shimmer.stopShimmer()
+    shimmer.visibility = View.GONE
+}
+
+
 fun populateUnifiedNativeAdView(nativeAd: NativeAd, adView: NativeAdView) {
     adView.mediaView = adView.findViewById(R.id.ad_media) as MediaView
     adView.headlineView = adView.findViewById(R.id.ad_headline)

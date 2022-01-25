@@ -8,8 +8,9 @@ import com.example.adstester.R
 import com.example.adstester.ads.loadNativeAd
 import com.example.adstester.databinding.LargeNativeBinding
 import com.example.adstester.databinding.RecycleritemBinding
+import com.google.android.gms.ads.nativead.NativeAd
 
-class RecyclerAdaptor(private var list: ArrayList<String>, private var context: Activity) :
+class RecyclerAdaptor(private var list: ArrayList<Any>, private var context: Activity) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == 1) {
@@ -25,13 +26,15 @@ class RecyclerAdaptor(private var list: ArrayList<String>, private var context: 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == 1) {
             with(holder as MyViewHolder) {
-                binding.tvTitle.text = list[position]
+                binding.tvTitle.text = list[position].toString()
             }
         } else {
             with(holder as AddViewHolder) {
+                val nv = list[position] as NativeAd
                 context.loadNativeAd(
                     binding.flAdplaceholder,
-                    R.layout.native_layout, binding.shimmer
+                    R.layout.native_layout,
+                    binding.shimmer, nv
                 )
 
             }
@@ -44,7 +47,7 @@ class RecyclerAdaptor(private var list: ArrayList<String>, private var context: 
 
     override fun getItemViewType(position: Int): Int {
         val recyclerViewItem: Any = list[position]
-        if (recyclerViewItem == "Native") {
+        if (recyclerViewItem is NativeAd) {
             return 0;
         }
         return 1
