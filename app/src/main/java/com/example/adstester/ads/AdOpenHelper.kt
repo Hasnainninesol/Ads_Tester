@@ -52,7 +52,7 @@ class AdOpenHelper(private var myApplication: AppClass) : Application.ActivityLi
         )
     }
 
-    fun showAdIfAvailable() {
+    private fun showAdIfAvailable() {
         if (!isShowingAd && isAdAvailable()) {
             Log.d("mTAG", "Will show ad.")
             val fullScreenContentCallback: FullScreenContentCallback =
@@ -90,16 +90,15 @@ class AdOpenHelper(private var myApplication: AppClass) : Application.ActivityLi
     }
 
     override fun onActivityStarted(p0: Activity) {
-
-            currentActivity = p0
+        currentActivity = p0
 
     }
 
     override fun onActivityResumed(p0: Activity) {
-            currentActivity = p0
-            if (!isLoaded) {
-                onStart()
-            }
+        currentActivity = p0
+        if (!isLoaded) {
+            onStart()
+        }
 
     }
 
@@ -109,6 +108,9 @@ class AdOpenHelper(private var myApplication: AppClass) : Application.ActivityLi
 
     override fun onActivityStopped(p0: Activity) {
         currentActivity = p0
+        isShowingAd = false
+        appOpenAd = null
+        fetchAd()
     }
 
     override fun onActivitySaveInstanceState(p0: Activity, p1: Bundle) {
@@ -116,10 +118,10 @@ class AdOpenHelper(private var myApplication: AppClass) : Application.ActivityLi
     }
 
     override fun onActivityDestroyed(p0: Activity) {
-        currentActivity = null
+        currentActivity = p0
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onStart() {
         showAdIfAvailable()
         Log.d("mTAG", "onStart")
